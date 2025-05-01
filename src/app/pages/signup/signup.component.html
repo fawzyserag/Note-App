@@ -1,0 +1,148 @@
+<section class="signup d-flex align-items-center vh-100">
+  <div class="container boxShadow">
+    <div class="signup-content row">
+      <div class="signup-form col-md-6">
+        <h2 class="form-title fs-2">Sign up</h2>
+        <form
+          class="register-form mt-4"
+          id="register-form"
+          [formGroup]="registerForm"
+          (ngSubmit)="registerSubmit(registerForm)"
+        >
+          <div class="form-group d-flex align-items-center mb-4">
+            <label for="name">
+              <span class="fa-solid fa-user"></span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Your Name"
+              formControlName="name"
+            />
+          </div>
+          @if (registerForm.get('name')?.errors &&
+          registerForm.get('name')?.touched) {
+          <div class="alert alert-danger">
+            @if (registerForm.get('name')?.getError('required')) {
+            <p>Name is Required</p>
+            } @else if (registerForm.get('name')?.getError('minlength')) {
+            <p>Name Should be more than or equal 3 chars</p>
+            } @else if (registerForm.get('name')?.getError('maxlength')) {
+            <p>Name Should be less than or equal 20 chars</p>
+            }
+          </div>
+          }
+          <div class="form-group d-flex align-items-center mb-4">
+            <label for="email">
+              <span class="fa-solid fa-envelope"></span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Your Email"
+              formControlName="email"
+            />
+          </div>
+          @if (registerForm.get('email')?.errors &&
+          registerForm.get('email')?.touched) {
+          <div class="alert alert-danger">
+            @if (registerForm.get('email')?.getError('required')) {
+            <p>Email is required</p>
+            } @else if (registerForm.get('email')?.getError('email')) {
+            <p>Enter valid Email</p>
+            }
+          </div>
+          }
+          <div class="form-group d-flex align-items-center mb-4">
+            <label for="pass">
+              <span class="fa-solid fa-lock"></span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+          </div>
+          @if (registerForm.get('password')?.errors &&
+          registerForm.get('password')?.touched) {
+          <div class="alert alert-danger">
+            @if (registerForm.get('password')?.getError('required')) {
+            <p>Password is required</p>
+            } @else if (registerForm.get('password')?.getError('pattern')) {
+            <p>Password must be at least 6 chars</p>
+            }
+          </div>
+          }
+          <div class="form-group d-flex align-items-center mb-4">
+            <label for="phone">
+              <span class="fa-solid fa-phone"></span>
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              placeholder="Phone"
+              formControlName="phone"
+            />
+          </div>
+          @if (registerForm.get('phone')?.errors &&
+          registerForm.get('phone')?.touched) {
+          <div class="alert alert-danger">
+            @if (registerForm.get('phone')?.getError('required')) {
+            <p>Phone is required</p>
+            } @else if (registerForm.get('phone')?.getError('pattern')) {
+            <p>accept only egypt phone numbers</p>
+            }
+          </div>
+          }
+          <div class="form-group d-flex align-items-center mb-4">
+            <label for="age">
+              <span class="fa-solid fa-globe"></span>
+            </label>
+            <input
+              type="number"
+              name="age"
+              id="age"
+              placeholder="Age"
+              formControlName="age"
+            />
+          </div>
+          @if (registerForm.get('age')?.errors &&
+          registerForm.get('age')?.touched) {
+          <div class="alert alert-danger">
+            @if (registerForm.get('age')?.getError('required')) {
+            <p>Age is required</p>
+            }
+          </div>
+          } @if (apiError) {
+          <p class="alert alert-danger">{{ apiError }}</p>
+          }
+          <div
+            class="d-flex justify-content-center align-items-center flex-column"
+          >
+            <button class="btn btn-danger" [disabled]="registerForm.invalid">
+              @if (isLoading) {
+              <i class="fa fa-spinner fa-spin"></i>
+              } @if(!isLoading){
+              <span>Register</span>
+              }
+            </button>
+            <p class="my-3">
+              Already Have an account?
+              <a class="text-info" routerLink="/signin">Signin</a>
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class="signup-image col-md-6 d-flex justify-content-center">
+        <figure>
+          <img src="images/signup-image.jpg" alt="sing up image" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>

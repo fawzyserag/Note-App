@@ -1,0 +1,23 @@
+<div class="p-4">
+  <h2>Add Your Notes</h2>
+  <form [formGroup]="noteForm" (ngSubmit)="noteSubmit(noteForm)">
+    <div class="d-flex flex-column">
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Content</mat-label>
+        <input matInput formControlName="content"/>
+      </mat-form-field>
+    </div>
+    <div>
+      @if (!data.title&&!data.content) {
+        <button mat-flat-button>Add</button>
+      }
+      @else {
+        <button mat-flat-button>Update</button>
+      }
+    </div>
+  </form>
+</div>
