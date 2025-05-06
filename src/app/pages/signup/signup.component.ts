@@ -22,7 +22,12 @@ export class SignupComponent {
   isLoading: boolean = false;
 
   registerForm: FormGroup = new FormGroup({
-    name: new FormControl('', [
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+    ]),
+    lastName: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(20),
@@ -32,8 +37,18 @@ export class SignupComponent {
       Validators.required,
       Validators.pattern(/^\w{6,}$/),
     ]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[0-9]{10,15}$/),
+    ]),
+    age: new FormControl('', [
+      Validators.required,
+      Validators.min(10),
+      Validators.max(100),
+      Validators.pattern(/^[0-9]+$/),
+    ]),
+    gender: new FormControl('', Validators.required),
   });
-
   registerSubmit(form: FormGroup) {
     this.isLoading = true;
 

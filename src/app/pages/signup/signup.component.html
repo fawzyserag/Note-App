@@ -10,25 +10,49 @@
           (ngSubmit)="registerSubmit(registerForm)"
         >
           <div class="form-group d-flex align-items-center mb-4">
-            <label for="name">
+            <label for="firstName">
               <span class="fa-solid fa-user"></span>
             </label>
             <input
               type="text"
-              name="name"
-              id="name"
-              placeholder="Your Name"
-              formControlName="name"
+              name="firstName"
+              id="firstName"
+              placeholder="Your First Name"
+              formControlName="firstName"
             />
           </div>
-          @if (registerForm.get('name')?.errors &&
-          registerForm.get('name')?.touched) {
+          @if (registerForm.get('firstName')?.errors &&
+          registerForm.get('firstName')?.touched) {
           <div class="alert alert-danger">
-            @if (registerForm.get('name')?.getError('required')) {
+            @if (registerForm.get('firstName')?.getError('required')) {
             <p>Name is Required</p>
-            } @else if (registerForm.get('name')?.getError('minlength')) {
+            } @else if (registerForm.get('firstName')?.getError('minlength')) {
             <p>Name Should be more than or equal 3 chars</p>
-            } @else if (registerForm.get('name')?.getError('maxlength')) {
+            } @else if (registerForm.get('firstName')?.getError('maxlength')) {
+            <p>Name Should be less than or equal 20 chars</p>
+            }
+          </div>
+          }
+          <div class="form-group d-flex align-items-center mb-4">
+            <label for="lastname">
+              <span class="fa-solid fa-user"></span>
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              placeholder="Your Last Name"
+              formControlName="lastName"
+            />
+          </div>
+          @if (registerForm.get('lastName')?.errors &&
+          registerForm.get('lastName')?.touched) {
+          <div class="alert alert-danger">
+            @if (registerForm.get('lastName')?.getError('required')) {
+            <p>Name is Required</p>
+            } @else if (registerForm.get('lastName')?.getError('minlength')) {
+            <p>Name Should be more than or equal 3 chars</p>
+            } @else if (registerForm.get('lastName')?.getError('maxlength')) {
             <p>Name Should be less than or equal 20 chars</p>
             }
           </div>
@@ -118,7 +142,14 @@
             <p>Age is required</p>
             }
           </div>
-          } @if (apiError) {
+          }
+          <select formControlName="gender">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+
+          @if (apiError) {
           <p class="alert alert-danger">{{ apiError }}</p>
           }
           <div

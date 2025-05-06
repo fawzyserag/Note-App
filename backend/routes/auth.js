@@ -6,7 +6,15 @@ const User = require("../models/User");
 
 // Register User
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    phone,
+    age,
+    gender
+  } = req.body;
 
   try {
     // Check if user already exists
@@ -18,7 +26,16 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      phone,
+      age,
+      gender,
+    });
+
     await user.save();
 
     // Generate JWT token
@@ -26,7 +43,7 @@ router.post("/register", async (req, res) => {
       expiresIn: process.env.JWT_EXPIRE,
     });
 
-    res.json({ token });
+    res.status(201).json({ token });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
