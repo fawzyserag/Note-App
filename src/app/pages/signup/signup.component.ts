@@ -7,11 +7,12 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, MatMenuModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
@@ -37,6 +38,7 @@ export class SignupComponent {
       Validators.required,
       Validators.pattern(/^\w{6,}$/),
     ]),
+    repassword: new FormControl('', [Validators.required]),
     phone: new FormControl('', [
       Validators.required,
       Validators.pattern(/^[0-9]{10,15}$/),
@@ -49,9 +51,13 @@ export class SignupComponent {
     ]),
     gender: new FormControl('', Validators.required),
   });
+  passwordsMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const repassword = form.get('repassword')?.value;
+    return password === repassword ? null : { passwordMismatch: true };
+  }
   registerSubmit(form: FormGroup) {
     this.isLoading = true;
-
     this.authService.handleRegister(form.value).subscribe({
       next: (res) => {
         console.log(res);

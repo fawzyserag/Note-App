@@ -102,6 +102,25 @@
           </div>
           }
           <div class="form-group d-flex align-items-center mb-4">
+            <label for="repassword">
+              <span class="fa-solid fa-lock"></span>
+            </label>
+            <input
+              type="password"
+              id="repassword"
+              placeholder="Confirm Password"
+              formControlName="repassword"
+            />
+          </div>
+          @if (
+            (registerForm.get('repassword')?.touched || registerForm.touched) &&
+            registerForm.errors?.['passwordMismatch']
+          ) {
+            <div class="alert alert-danger">
+              <p>Passwords do not match</p>
+            </div>
+          }
+          <div class="form-group d-flex align-items-center mb-4">
             <label for="phone">
               <span class="fa-solid fa-phone"></span>
             </label>
@@ -143,19 +162,30 @@
             }
           </div>
           }
-          <select formControlName="gender">
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-
+          <button mat-button type="button" [matMenuTriggerFor]="menu">
+            {{ registerForm.get("gender")?.value || "Select Gender" }}
+          </button>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              (click)="registerForm.get('gender')?.setValue('Male')"
+            >
+              Male
+            </button>
+            <button
+              mat-menu-item
+              (click)="registerForm.get('gender')?.setValue('Female')"
+            >
+              Female
+            </button>
+          </mat-menu>
           @if (apiError) {
           <p class="alert alert-danger">{{ apiError }}</p>
           }
           <div
             class="d-flex justify-content-center align-items-center flex-column"
           >
-            <button class="btn btn-danger" [disabled]="registerForm.invalid">
+            <button class="btn btn-danger" [disabled]="registerForm.invalid" >
               @if (isLoading) {
               <i class="fa fa-spinner fa-spin"></i>
               } @if(!isLoading){
